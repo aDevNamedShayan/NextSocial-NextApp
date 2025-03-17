@@ -1,4 +1,6 @@
+import { redirect } from 'next/navigation';
 import { storePost } from '@/lib/posts';
+import LoadingFormButton from '@/components/AddPost/LoadingFormBtn';
 
 export default function NewPostPage() {
   async function createPost(formData) {
@@ -13,7 +15,9 @@ export default function NewPostPage() {
       content,
       userId: 1
     }
-    storePost(post)
+    await storePost(post)
+
+    redirect('/feed')
   }
 
   return (
@@ -22,7 +26,7 @@ export default function NewPostPage() {
       <form action={createPost}>
         <p className="form-control">
           <label htmlFor="title">Title</label>
-          <input type="text" id="title" name="title" />
+          <input type="text" id="title" name="title" required />
         </p>
         <p className="form-control">
           <label htmlFor="image">Image URL</label>
@@ -31,15 +35,15 @@ export default function NewPostPage() {
             accept="image/png, image/jpeg"
             id="image"
             name="image"
+            required
           />
         </p>
         <p className="form-control">
           <label htmlFor="content">Content</label>
-          <textarea id="content" name="content" rows="5" />
+          <textarea id="content" name="content" rows="5" required/>
         </p>
         <p className="form-actions">
-          <button type="reset">Reset</button>
-          <button>Create Post</button>
+          <LoadingFormButton />
         </p>
       </form>
     </>
