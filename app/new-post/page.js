@@ -7,7 +7,13 @@ export default function NewPostPage() {
     const image = formData.get('image')
     const content = formData.get('content')
 
-    console.log(title, image, content)
+    const post = {
+      imageUrl: 'https://www.slashgear.com/img/gallery/10-old-school-lexus-models-that-are-still-affordable-for-now/lexus-is-300-1730087299.webp',
+      title,
+      content,
+      userId: 1
+    }
+    storePost(post)
   }
 
   return (
