@@ -18,7 +18,7 @@ export default function NewPostPage() {
           {state.title && <p className="form-errors">{state.title}</p>}
         </p>
         <p className="form-control">
-          <label htmlFor="image">Image URL</label>
+          <label htmlFor="image">Image</label>
           <input
             type="file"
             accept="image/png, image/jpeg"

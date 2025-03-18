@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { storePost } from "../lib/posts";
+import { uploadImage } from "@/lib/cloudinary";
 
 export async function createPost(prevState, formData) {
   const title = formData.get("title");
@@ -23,9 +24,16 @@ export async function createPost(prevState, formData) {
 
   if (Object.keys(errors).length > 0) return errors;
 
+  let imageUrl
+
+  try {
+    imageUrl = await uploadImage(image)
+  } catch (error) {
+    throw new Error('Image upload failed, post was not created. Please try again later.')
+  }
+
   const post = {
-    imageUrl:
-      "https://www.slashgear.com/img/gallery/10-old-school-lexus-models-that-are-still-affordable-for-now/lexus-is-300-1730087299.webp",
+    imageUrl,
     title,
     content,
     userId: 1,
